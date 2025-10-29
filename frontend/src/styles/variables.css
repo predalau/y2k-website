@@ -1,0 +1,88 @@
+/* Y2K Theme Variables - Nostalgic colors and styling */
+
+:root {
+  /* Y2K Color Palette */
+  --color-cyber-pink: #ff00ff;
+  --color-cyber-blue: #00ffff;
+  --color-cyber-purple: #9945ff;
+  --color-neon-green: #39ff14;
+  --color-electric-yellow: #ffff00;
+  --color-hot-pink: #ff69b4;
+  --color-lavender: #e0b0ff;
+  --color-matrix-green: #00ff41;
+  
+  /* Grayscale */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-silver: #c0c0c0;
+  --color-gray-light: #e0e0e0;
+  --color-gray-dark: #333333;
+  
+  /* Gradients */
+  --gradient-cyber: linear-gradient(135deg, var(--color-cyber-pink), var(--color-cyber-blue), var(--color-cyber-purple));
+  --gradient-neon: linear-gradient(90deg, var(--color-neon-green), var(--color-cyber-blue), var(--color-cyber-pink));
+  --gradient-sunset: linear-gradient(135deg, var(--color-hot-pink), var(--color-electric-yellow), var(--color-cyber-purple));
+  --gradient-holographic: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+  
+  /* Background */
+  --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #16213e 100%);
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --bg-card-hover: rgba(255, 255, 255, 0.1);
+  
+  /* Typography */
+  --font-primary: 'Space Grotesk', sans-serif;
+  --font-display: 'Orbitron', sans-serif;
+  
+  /* Font Sizes */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 2rem;
+  --font-4xl: 2.5rem;
+  --font-5xl: 3rem;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 2rem;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-glow-pink: 0 0 20px rgba(255, 0, 255, 0.5);
+  --shadow-glow-blue: 0 0 20px rgba(0, 255, 255, 0.5);
+  --shadow-glow-green: 0 0 20px rgba(57, 255, 20, 0.5);
+  --shadow-neon: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* Dark mode variables (if needed) */
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0014 50%, #0d1117 100%);
+}
