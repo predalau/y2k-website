@@ -3,7 +3,7 @@
 :root {
   /* Y2K Color Palette */
   --color-cyber-pink: #ff00ff;
-  --color-cyber-blue: #00ffff;
+  --color-cyber-blue: #498481;
   --color-cyber-purple: #9945ff;
   --color-neon-green: #39ff14;
   --color-electric-yellow: #ffff00;
@@ -25,7 +25,7 @@
   --gradient-holographic: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
   
   /* Background */
-  --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #16213e 100%);
+  --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #424f4e 50%, #708483 100%);
   --bg-card: rgba(255, 255, 255, 0.05);
   --bg-card-hover: rgba(255, 255, 255, 0.1);
   
@@ -62,7 +62,7 @@
   
   /* Shadows */
   --shadow-glow-pink: 0 0 20px rgba(255, 0, 255, 0.5);
-  --shadow-glow-blue: 0 0 20px rgba(0, 255, 255, 0.5);
+  --shadow-glow-blue: 0 0 20px #498481;
   --shadow-glow-green: 0 0 20px rgba(57, 255, 20, 0.5);
   --shadow-neon: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
