@@ -2,20 +2,13 @@ import poli_img from '../assets/poli.jpg';
 import poli_art from '../assets/poli_art.jpg';
 <template>
   <div class="home">
-    <div class="background-shape">
-      <img src="@/assets/logo.png" alt="3D Abstract Shape" class="pulse-scale" />
-    </div>
+      <div class="hero-background-logo">
+        <img src="@/assets/leather-bg2.jpg" alt="Leather Background" class="leather-bg" />
+        <img src="@/assets/logo.png" alt="Logo Background" class="logo-bg pulse-scale" />
+      </div>
     <!-- Hero Section -->
     <section class="hero section-scroll">
       <div class="container">
-        <div class="hero-buttons">
-          <button class="btn btn-secondary hover-glow slide-in-left">
-            Shop Now
-          </button>
-          <button class="btn btn-secondary hover-glow slide-in-right">
-            View Collection
-          </button>
-        </div>
       </div>
     </section>
 
@@ -166,7 +159,40 @@ export default {
   object-fit: contain;
   opacity: 0.9;
 }
-.home > *:not(.background-shape) {
+
+.hero-background-logo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero-background-logo .leather-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  z-index: 1;
+}
+.hero-background-logo .logo-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.7;
+  z-index: 2;
+}
+
+.home > *:not(.hero-background-logo) {
   position: relative;
   z-index: 1;
 }
