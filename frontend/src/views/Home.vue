@@ -1,19 +1,18 @@
+import poli_img from '../assets/poli.jpg';
+import poli_art from '../assets/poli_art.jpg';
 <template>
   <div class="home">
+    <div class="background-shape">
+      <img src="@/assets/logo.png" alt="3D Abstract Shape" class="pulse-scale" />
+    </div>
     <!-- Hero Section -->
     <section class="hero section-scroll">
       <div class="container">
-        <h1 class="hero-title neon-text-silver neon-pulse">
-          Welcome to Y2K Shop
-        </h1>
-        <p class="hero-subtitle neon-text-blue" style="animation-delay: 0.2s">
-          Experience the Future of Retro Shopping
-        </p>
-        <div class="hero-buttons fade-in-up" style="animation-delay: 0.4s">
-          <button class="btn btn-secondary hover-glow">
+        <div class="hero-buttons">
+          <button class="btn btn-secondary hover-glow slide-in-left">
             Shop Now
           </button>
-          <button class="btn btn-secondary hover-glow">
+          <button class="btn btn-secondary hover-glow slide-in-right">
             View Collection
           </button>
         </div>
@@ -26,7 +25,7 @@
         <h2 class="section-title neon-text-silver text-center mb-5">Featured Artists & Art</h2>
         <div class="gallery-grid">
           <!-- Placeholder for featured artists and art -->
-          <div class="gallery-card card-glow scale-in" v-for="n in 3" :key="n" :style="`animation-delay: ${n * 0.2}s`">
+          <div class="gallery-card hover-glow scale-in" v-for="n in 3" :key="n" :style="`animation-delay: ${n * 0.2}s`">
             <div class="gallery-image silver-bg"></div>
             <h3 class="gallery-artist">Artist Name {{ n }}</h3>
             <p class="gallery-art-title">Artwork Title {{ n }}</p>
@@ -41,8 +40,10 @@
         <h2 class="section-title neon-text-blue text-center mb-5">Shop Artist Collections</h2>
         <div class="artist-grid">
           <!-- Placeholder for artist and product cards -->
-          <div class="artist-card card-glow scale-in" v-for="n in 3" :key="`artist-${n}`" :style="`animation-delay: ${n * 0.2}s`">
-            <div class="artist-image blue-bg"></div>
+          <div class="artist-card hover-glow scale-in" v-for="n in 3" :key="`artist-${n}`" :style="`animation-delay: ${n * 0.2}s`">
+            <div class="artist-image blue-bg"> 
+              <img src="../assets/poli.jpg" alt="Artist Name" class="image-fit"/>
+            </div>
             <h3 class="artist-name">Artist {{ n }}</h3>
             <p class="product-title">T-Shirt Design {{ n }}</p>
             <button class="btn btn-primary hover-glow">Buy Now</button>
@@ -101,9 +102,30 @@ export default {
 </script>
 
 <style scoped>
+/* Logo Bar */
+.logo-bar {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: transparent;
+  pointer-events: none;
+}
+.site-logo {
+  width: 96px;
+  height: auto;
+  margin: 1.5rem 0 0 0;
+  filter: drop-shadow(0 2px 16px #0008);
+  pointer-events: auto;
+}
 /* Hero Section */
 .hero {
   min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,12 +136,39 @@ export default {
 }
 
 .home {
-  background: var(--bg-gradient);
+  background: linear-gradient(135deg, #050510 0%, #181a2e86 100%);
   color: var(--color-silver);
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  position: relative;
+}
+
+.background-shape {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80vw;
+  height: 80vh;
+  max-width: 80%;
+  max-height: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.background-shape img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.9;
+}
+.home > *:not(.background-shape) {
+  position: relative;
+  z-index: 1;
 }
 
 .section-scroll {
@@ -129,6 +178,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 
@@ -136,7 +186,7 @@ export default {
   font-size: clamp(2.5rem, 8vw, 5rem);
   margin-bottom: var(--space-lg);
   font-weight: 900;
-  text-shadow: #ffcc00 1px 0 10px;
+  text-shadow: #0061d0ff 1px 0 10px;
 }
 
 .holographic {
@@ -156,6 +206,11 @@ export default {
   gap: var(--space-lg);
   justify-content: center;
   flex-wrap: wrap;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20%;
+  width: 100%;
 }
  .shape-1 {
   width: 400px;
@@ -234,7 +289,19 @@ export default {
   background: var(--color-cyber-blue);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.image-fit {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* or 'contain' for full image without cropping */
+  object-position: center;
+  display: block;
+}
+
 .blue-bg {
   background: var(--color-cyber-blue) !important;
 }
