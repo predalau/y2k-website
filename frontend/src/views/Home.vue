@@ -19,10 +19,7 @@ import poli_art from '../assets/poli_art.jpg';
       <div class="carousel-container">
           <div class="carousel-row">
             <!-- Artist card outside carousel -->
-            <div class="carousel-card artist-card hover-glow scale-in">
-              <div class="artist-image silver-bg">
-                <img src="../assets/poli2.png" alt="Artist Name" class="image-fit"/>
-              </div>
+            <div class="carousel-card artist-card hover-glow scale-in" style="background-image: url('../src/assets/poli2.png'); background-size: 65%; background-position: center; background-repeat: no-repeat;">
               <h3 class="artist-name">Christian Roncea</h3>
               <p class="gallery-art-title">Furby Collection</p>
             </div>
@@ -97,7 +94,7 @@ function scrollToNextSection() {
 .carousel-row {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
   height: 60vh;
@@ -308,10 +305,12 @@ function scrollToNextSection() {
   display: flex;
   flex-direction: row;
   align-items: start;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-xl);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  padding-left: 0;
+  padding-bottom: var(--space-md);
 }
 .carousel-card {
   height: 50vh;
@@ -323,20 +322,26 @@ function scrollToNextSection() {
   min-width: 220px;
   max-width: 260px;
   color: var(--color-silver);
-  box-shadow: 0 0 24px var(--color-cyber-blue);
+  box-shadow: 0 0 24px var(--color-silver);
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: start;
   object-fit: cover;
 }
-.artist-card .artist-image {
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  object-fit: contain;
+.artist-card {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  justify-content: flex-end;
+}
+.artist-card .artist-name,
+.artist-card .gallery-art-title {
+  background: rgba(0, 0, 0, 0.7);
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
 }
 .product-card .product-image {
   width: 100%;
@@ -359,7 +364,7 @@ function scrollToNextSection() {
   flex-wrap: wrap;
 }
 .artist-card {
-  background: var(--color-black);
+  background: var(--color-black) opacity(0.95);
   border: 2px solid var(--color-cyber-blue);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
