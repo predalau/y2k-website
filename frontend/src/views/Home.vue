@@ -15,7 +15,7 @@ import poli_art from '../assets/poli_art.jpg';
 
     <!-- Gallery Highlights Section -->
     <section class="gallery-highlights section-scroll">
-      <h2 class="section-title neon-text-silver text-center mb-5">Featured Artists & Art</h2>
+      <h2 class="section-title neon-text-silver text-center mb-5">Artists</h2>
       <div class="carousel-container">
           <div class="carousel-row">
             <!-- Artist card outside carousel -->
@@ -25,13 +25,32 @@ import poli_art from '../assets/poli_art.jpg';
             </div>
             <!-- Carousel with product cards -->
             <div class="carousel">
-              <div class="carousel-card product-card hover-glow scale-in" v-for="n in 7" :key="`product-${n}`" :style="`animation-delay: ${n * 0.2 + 0.2}s`">
+              <div class="carousel-card product-card hover-glow scale-in" v-for="n in 3" :key="`product-${n}`" :style="`animation-delay: ${n * 0.2 + 0.2}s`">
                 <div class="product-image silver-bg"></div>
                 <h3 class="product-title">Product {{ n }}</h3>
                 <p class="gallery-art-title">Artwork Title {{ n }}</p>
               </div>
             </div>
           </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section section-scroll">
+      <h2 class="section-title neon-text-blue text-center mb-5">Shop Collection</h2>
+      <div class="container">
+        <div class="products-grid">
+          <div class="product-item hover-glow scale-in" v-for="n in 6" :key="`product-${n}`" :style="`animation-delay: ${n * 0.1}s`">
+            <div class="product-img-container">
+              <img src="../assets/poli_art.jpg" alt="Product Name" class="product-img"/>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Product {{ n }}</h3>
+              <p class="product-price">$29.99</p>
+              <button class="btn btn-primary hover-glow add-to-cart">Add to Cart</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -352,7 +371,7 @@ function scrollToNextSection() {
 }
 .neon-text-silver {
   color: var(--color-silver);
-  text-shadow: 0 0 8px var(--color-cyber-blue), 0 0 16px var(--color-silver);
+  text-shadow: 0 0 8px var(--color-gray-light), 0 0 16px var(--color-silver);
 }
 .artist-products {
 
@@ -365,12 +384,12 @@ function scrollToNextSection() {
 }
 .artist-card {
   background: var(--color-black) opacity(0.95);
-  border: 2px solid var(--color-cyber-blue);
+  border: 2px solid var(--color-silver-blue);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   min-width: 220px;
   max-width: 260px;
-  color: var(--color-cyber-blue);
+  color: var(--color-silver-blue);
   box-shadow: 0 0 24px var(--color-silver);
 }
 .artist-image {
@@ -477,6 +496,77 @@ function scrollToNextSection() {
   margin-right: auto;
 }
 
+/* Products Section */
+.products-section {
+  padding: var(--space-2xl) 0;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+  height: 70vh;
+  max-width: 1200px;
+  max-height: 70vh;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.product-item {
+  background: var(--color-black);
+  border: 2px solid var(--color-cyber-blue);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 32px rgba(0, 250, 255, 0.3);
+}
+
+.product-img-container {
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-cyber-blue);
+}
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.product-name {
+  font-size: var(--font-lg);
+  color: var(--color-silver);
+  margin: 0;
+}
+
+.product-price {
+  font-size: var(--font-xl);
+  color: var(--color-cyber-blue);
+  font-weight: bold;
+  margin: 0;
+}
+
+.add-to-cart {
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero-buttons {
@@ -491,6 +581,35 @@ function scrollToNextSection() {
   
   .shape {
     filter: blur(40px);
+  }
+
+  /* Products become carousel on mobile */
+  .products-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-lg);
+    padding: 0 var(--space-md);
+  }
+
+  .product-item {
+    min-width: 280px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .products-grid::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .products-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  .products-grid::-webkit-scrollbar-thumb {
+    background: var(--color-cyber-blue);
+    border-radius: 10px;
   }
 }
 </style>
