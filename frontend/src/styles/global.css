@@ -73,9 +73,8 @@ h3 {
 }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--color-cyber-blue);
-  border: 2px solid var(--color-cyber-blue);
+  color: var(--color-text);
+  border: 2px solid var(--color-text);
   box-shadow: var(--shadow-glow-blue);
 }
 
@@ -199,12 +198,12 @@ h3 {
 
 /* Neon Text */
 .neon-text {
-  color: var(--color-cyber-pink);
+  color: var(--color-text);
   text-shadow: 
-    0 0 5px var(--color-cyber-pink),
-    0 0 10px var(--color-cyber-pink),
-    0 0 20px var(--color-cyber-pink),
-    0 0 40px var(--color-cyber-pink);
+    0 0 5px var(--color-gray-light),
+    0 0 10px var(--color-gray-light),
+    0 0 20px var(--color-gray-light),
+    0 0 40px var(--color-gray-light);
 }
 
 .neon-text-blue {
@@ -337,12 +336,12 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gradient-cyber);
+  background: var(--gradient-silver);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cyber-pink);
+  background: var(--color-gray-dark);
 }
 
 /* Selection */

@@ -4,12 +4,16 @@
   /* Y2K Color Palette */
   --color-cyber-pink: #ff00ff;
   --color-cyber-blue: #498481;
+  --color-cyber-blue-dark: #1f627a;
   --color-cyber-purple: #9945ff;
   --color-neon-green: #39ff14;
   --color-electric-yellow: #ffff00;
   --color-hot-pink: #ff69b4;
   --color-lavender: #e0b0ff;
+  --color-lavender-dark: #8d75ad;
   --color-matrix-green: #00ff41;
+  --color-silver-blue: #627a83;
+  --color-text: #00bfd0;
   
   /* Grayscale */
   --color-white: #ffffff;
@@ -22,6 +26,7 @@
   --gradient-cyber: linear-gradient(135deg, var(--color-cyber-pink), var(--color-cyber-blue), var(--color-cyber-purple));
   --gradient-neon: linear-gradient(90deg, var(--color-neon-green), var(--color-cyber-blue), var(--color-cyber-pink));
   --gradient-sunset: linear-gradient(135deg, var(--color-hot-pink), var(--color-electric-yellow), var(--color-cyber-purple));
+  --gradient-silver: linear-gradient(135deg, #f0f0f0a1, #c0c0c085, #90909095);
   --gradient-holographic: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
   
   /* Background */
@@ -30,8 +35,8 @@
   --bg-card-hover: rgba(255, 255, 255, 0.1);
   
   /* Typography */
-  --font-primary: 'Space Grotesk', sans-serif;
-  --font-display: 'Orbitron', sans-serif;
+  --font-primary: 'Roboto', sans-serif;
+  --font-display: 'Baskerville', serif; 
   
   /* Font Sizes */
   --font-xs: 0.75rem;
@@ -64,6 +69,7 @@
   --shadow-glow-pink: 0 0 20px rgba(255, 0, 255, 0.5);
   --shadow-glow-blue: 0 0 20px #498481;
   --shadow-glow-green: 0 0 20px rgba(57, 255, 20, 0.5);
+  --shadow-glow-silver: 0 0 20px rgba(192, 192, 192, 0.5);
   --shadow-neon: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
   
