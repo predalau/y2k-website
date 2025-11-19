@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 
 # Import routers
-from app.routes import products, artists
+from app.routes import products, artists, analytics, exports
 # from app.routes import auth, cart, orders  # Uncomment as you create them
 
 app = FastAPI(
@@ -20,9 +20,10 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.BACKEND_CORS_ORIGINS,
-    allow_credentials=True,
+    allow_credentials=False,  # Must be False when using wildcard origins
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
@@ -45,6 +46,8 @@ async def health_check():
 # Include routers
 app.include_router(products.router, prefix=f"{settings.API_V1_STR}/products", tags=["products"])
 app.include_router(artists.router, prefix=f"{settings.API_V1_STR}/artists", tags=["artists"])
+app.include_router(analytics.router, prefix=f"{settings.API_V1_STR}/analytics", tags=["analytics"])
+app.include_router(exports.router, prefix=f"{settings.API_V1_STR}/exports", tags=["exports"])
 # app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
 # app.include_router(cart.router, prefix=f"{settings.API_V1_STR}/cart", tags=["cart"])
 # app.include_router(orders.router, prefix=f"{settings.API_V1_STR}/orders", tags=["orders"])

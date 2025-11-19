@@ -22,11 +22,9 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "sqlite:///./y2k_shopping.db"
     
-    # CORS
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
-        "http://localhost:5173",  # Vite default
-        "http://localhost:3000",   # Alternative
-    ]
+    # CORS - Allow all origins for development
+    # In production, specify exact origins
+    BACKEND_CORS_ORIGINS: List[str] = ["*"]
     
     class Config:
         env_file = ".env"
