@@ -1,5 +1,6 @@
 <template>
-  <div id="app" class="y2k-container">
+  <div id="app" class="aevvm-container">
+    <Cart />
     <router-view v-slot="{ Component }">
       <transition name="page-fade" mode="out-in">
         <component :is="Component" />
@@ -8,10 +9,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-}
+<script setup>
+import Cart from './components/Cart.vue'
 </script>
 
 <style scoped>

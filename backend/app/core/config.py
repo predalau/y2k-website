@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     
     # API Configuration
     API_V1_STR: str = "/api/v1"
-    PROJECT_NAME: str = "Y2K Shopping API"
+    PROJECT_NAME: str = "AEVVM API"
     DEBUG: bool = True
     
     # Security
@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
     # Database
-    DATABASE_URL: str = "sqlite:///./y2k_shopping.db"
+    DATABASE_URL: str = "sqlite:///./aevvm_store.db"
     
     # CORS - Allow all origins for development
     # In production, specify exact origins

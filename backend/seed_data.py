@@ -1,5 +1,5 @@
 """
-Seed script to populate database with mock data for testing admin dashboard
+Seed script to populate database with mock data for AEVVM store
 """
 import sys
 from datetime import datetime, timedelta
@@ -27,7 +27,7 @@ def create_mock_data():
     db = SessionLocal()
 
     try:
-        print("🌱 Starting database seeding...")
+        print("🔨 Starting database seeding...")
 
         # Clear existing data (optional)
         print("  Clearing existing data...")
@@ -38,7 +38,7 @@ def create_mock_data():
         # 1. Create Users
         print("  Creating users...")
         admin = User(
-            email="admin@y2k.com",
+            email="admin@aevvm.com",
             hashed_password=get_password_hash("admin123"),
             full_name="Admin User",
             phone="555-0100",
@@ -105,11 +105,11 @@ def create_mock_data():
         # 3. Create Artists
         print("  Creating artists...")
         artists_data = [
-            ("Sarah Chen", "sarah-chen", "Y2K inspired digital artist", 15.0, True),
-            ("Mike Torres", "mike-torres", "Retro graphic designer", 12.0, True),
-            ("Luna Park", "luna-park", "Cyberpunk illustrator", 18.0, True),
-            ("Alex Rivera", "alex-rivera", "Street art meets Y2K", 10.0, False),
-            ("Jamie Kim", "jamie-kim", "Neon dreams creator", 20.0, True),
+            ("Sarah Chen", "sarah-chen", "Minimalist brutalist designer", 15.0, True),
+            ("Mike Torres", "mike-torres", "Industrial typography specialist", 12.0, True),
+            ("Luna Park", "luna-park", "Concrete structure artist", 18.0, True),
+            ("Alex Rivera", "alex-rivera", "Raw architectural designer", 10.0, False),
+            ("Jamie Kim", "jamie-kim", "Chrome metallic sculptor", 20.0, True),
         ]
 
         artists = []
@@ -133,14 +133,14 @@ def create_mock_data():
         # 4. Create Products with Variants
         print("  Creating products...")
         products_data = [
-            ("Cyber Sunset T-Shirt", "cyber-sunset-tshirt", "100% cotton with vibrant gradient", 29.99, "physical", 0, 0),
-            ("Neon Dreams Hoodie", "neon-dreams-hoodie", "Ultra-soft fleece hoodie", 59.99, "physical", 0, 1),
-            ("Retro Wave Sticker Pack", "retro-wave-stickers", "Set of 10 vinyl stickers", 12.99, "physical", 2, 0),
-            ("Y2K Aesthetic Poster", "y2k-poster", "High-quality art print", 24.99, "physical", 3, 1),
-            ("Holographic Pin Set", "holographic-pins", "Enamel pins with holographic finish", 19.99, "physical", 4, 2),
-            ("Digital Wallpaper Pack", "digital-wallpapers", "10 HD Y2K wallpapers", 9.99, "digital", 3, 3),
-            ("Pixel Heart Tee", "pixel-heart-tee", "Retro pixel art design", 27.99, "physical", 0, 1),
-            ("Glitch Art Hoodie", "glitch-art-hoodie", "Abstract glitch design", 64.99, "physical", 0, 4),
+            ("Concrete Form T-Shirt", "concrete-form-tshirt", "Heavy cotton with brutalist geometry", 29.99, "physical", 0, 0),
+            ("Steel Structure Hoodie", "steel-structure-hoodie", "Industrial weight fleece", 59.99, "physical", 0, 1),
+            ("Chrome Decal Pack", "chrome-decal-stickers", "Set of 10 metallic vinyl stickers", 12.99, "physical", 2, 0),
+            ("Brutalist Grid Poster", "brutalist-poster", "Museum-grade architectural print", 24.99, "physical", 3, 1),
+            ("Industrial Pin Set", "industrial-pins", "Brushed steel enamel pins", 19.99, "physical", 4, 2),
+            ("Digital Asset Pack", "digital-assets", "10 4K brutalist wallpapers", 9.99, "digital", 3, 3),
+            ("Raw Form Tee", "raw-form-tee", "Monochrome structural design", 27.99, "physical", 0, 1),
+            ("Chrome Void Hoodie", "chrome-void-hoodie", "Reflective metallic print", 64.99, "physical", 0, 4),
         ]
 
         products = []
@@ -284,7 +284,7 @@ def create_mock_data():
 
             order = Order(
                 user_id=user.id,
-                order_number=f"Y2K-{1000 + i}",
+                order_number=f"AEV-{1000 + i}",
                 status=status,
                 subtotal=subtotal,
                 tax_amount=tax_amount,
@@ -364,8 +364,8 @@ def create_mock_data():
                     comment=random.choice([
                         "The quality is outstanding and the design is exactly what I wanted!",
                         "Fast shipping and great customer service. Highly recommend!",
-                        "Perfect addition to my Y2K collection. Will buy again!",
-                        "The colors are vibrant and the material feels great.",
+                        "Perfect addition to my collection. Will buy again!",
+                        "The material quality is exceptional and feels premium.",
                         "Exactly as pictured. Very happy with my purchase!"
                     ]),
                     is_verified_purchase=True,
@@ -390,7 +390,7 @@ def create_mock_data():
         print(f"   - Order Items: {len(order_items_list)}")
         print(f"   - Reviews: {len(reviews)}")
         print("\n🔑 Admin login:")
-        print("   Email: admin@y2k.com")
+        print("   Email: admin@aevvm.com")
         print("   Password: admin123")
 
     except Exception as e:
@@ -401,7 +401,7 @@ def create_mock_data():
         db.close()
 
 if __name__ == "__main__":
-    print("🚀 Y2K Shopping - Database Seed Script")
+    print("🔨 AEVVM Store - Database Seed Script")
     print("=" * 50)
 
     response = input("\n⚠️  This will DELETE all existing data. Continue? (yes/no): ")

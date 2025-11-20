@@ -1,8 +1,8 @@
-/* Global Y2K Styles */
+/* Global Brutalist Chrome Styles */
 
 body {
   background: var(--bg-gradient);
-  color: var(--color-white);
+  color: var(--color-text);
   overflow-x: hidden;
 }
 
@@ -15,10 +15,12 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: var(--font-5xl);
-  background: var(--gradient-cyber);
+  background: var(--gradient-metallic);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: 3px;
+  text-transform: uppercase;
 }
 
 h2 {
@@ -29,17 +31,17 @@ h3 {
   font-size: var(--font-3xl);
 }
 
-/* Y2K Button Styles */
+/* Brutalist Button Styles */
 .btn {
   padding: var(--space-md) var(--space-xl);
-  border-radius: var(--radius-lg);
-  font-weight: 600;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
-  font-family: var(--font-display);
+  font-family: 'Arial', sans-serif;
 }
 
 .btn::before {
@@ -61,27 +63,30 @@ h3 {
 }
 
 .btn-primary {
-  background: var(--gradient-cyber);
-  color: var(--color-white);
-  border: 2px solid transparent;
-  box-shadow: var(--shadow-glow-blue);
+  background: var(--gradient-chrome);
+  color: var(--color-black);
+  border: 1px solid var(--color-chrome);
+  box-shadow: var(--shadow-steel);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-neon);
+  box-shadow: var(--shadow-metallic);
+  background: var(--color-chrome);
 }
 
 .btn-secondary {
-  color: var(--color-text);
-  border: 2px solid var(--color-text);
-  box-shadow: var(--shadow-glow-blue);
+  color: var(--color-chrome);
+  border: 1px solid var(--color-steel);
+  box-shadow: var(--shadow-chrome);
+  background: transparent;
 }
 
 .btn-secondary:hover {
-  background: var(--color-cyber-blue);
-  color: var(--color-black);
+  background: var(--color-steel);
+  color: var(--color-white);
   transform: translateY(-2px);
+  border-color: var(--color-chrome);
 }
 
 .btn-ghost {
@@ -109,9 +114,9 @@ h3 {
 
 .card:hover {
   background: var(--bg-card-hover);
-  border-color: var(--color-cyber-pink);
+  border-color: var(--color-silver);
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(255, 0, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.696);
 }
 
 .card-glow {

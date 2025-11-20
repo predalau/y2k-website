@@ -1,6 +1,6 @@
 <template>
   <div class="admin-dashboard">
-    <h1 class="holographic">Admin Dashboard</h1>
+    <h1 class="chrome-title">AEVVM Dashboard</h1>
 
     <!-- Date Range Filter -->
     <div class="dashboard-filters glass">
@@ -22,21 +22,21 @@
 
     <!-- Key Stats Cards -->
     <div v-else class="stats-grid">
-      <div class="stat-card card-glow fade-in-up">
-        <h3 class="neon-text-blue">Total Sales</h3>
+      <div class="stat-card chrome-card fade-in-up">
+        <h3 class="chrome-text">Total Sales</h3>
         <p class="stat-value">${{ formatNumber(stats.total_sales) }}</p>
       </div>
-      <div class="stat-card card-glow fade-in-up" style="animation-delay: 0.1s">
-        <h3 class="neon-text-green">Orders</h3>
+      <div class="stat-card chrome-card fade-in-up" style="animation-delay: 0.1s">
+        <h3 class="chrome-text">Orders</h3>
         <p class="stat-value">{{ stats.total_orders }}</p>
       </div>
-      <div class="stat-card card-glow fade-in-up" style="animation-delay: 0.2s">
-        <h3 class="neon-text">Users</h3>
+      <div class="stat-card chrome-card fade-in-up" style="animation-delay: 0.2s">
+        <h3 class="chrome-text">Users</h3>
         <p class="stat-value">{{ stats.total_users }}</p>
         <p class="stat-sub">+{{ stats.new_users }} new</p>
       </div>
-      <div class="stat-card card-glow fade-in-up" style="animation-delay: 0.3s">
-        <h3 class="neon-text-yellow">Avg Order</h3>
+      <div class="stat-card chrome-card fade-in-up" style="animation-delay: 0.3s">
+        <h3 class="chrome-text">Avg Order</h3>
         <p class="stat-value">${{ formatNumber(stats.avg_order_value) }}</p>
       </div>
     </div>
@@ -117,7 +117,7 @@
             <tr v-for="order in recentOrders" :key="order.id" class="hover-scale">
               <td><strong>{{ order.order_number }}</strong></td>
               <td>{{ order.customer_email }}</td>
-              <td class="neon-text-blue">${{ formatNumber(order.total_amount) }}</td>
+              <td class="chrome-text">${{ formatNumber(order.total_amount) }}</td>
               <td><span :class="`status-badge status-${order.status}`">{{ order.status }}</span></td>
               <td>{{ formatDate(order.created_at) }}</td>
             </tr>
@@ -177,11 +177,11 @@ const recentOrders = ref([])
 
 // Y2K Color Palette
 const colors = {
-  cyberPink: '#ff00ff',
-  cyberBlue: '#00ffff',
-  neonGreen: '#39ff14',
-  electricYellow: '#ffff00',
-  cyberPurple: '#9945ff'
+  chrome: '#c0c0c0',
+  steel: '#6a6a6a',
+  iron: '#4a4a4a',
+  concrete: '#95a5a6',
+  graphite: '#3d3d3d'
 }
 
 // Clear filters
@@ -244,38 +244,44 @@ const salesChartData = computed(() => ({
   datasets: [{
     label: 'Sales ($)',
     data: salesData.value.map(d => d.total_sales),
-    borderColor: colors.cyberBlue,
-    backgroundColor: colors.cyberBlue + '40',
-    tension: 0.4,
+    borderColor: colors.chrome,
+    backgroundColor: colors.chrome + '40',
+    tension: 0.1,
     fill: true
   }]
 }))
 
-const statusChartData = computed(() => ({
-  labels: statusData.value.map(d => d.status),
-  datasets: [{
-    data: statusData.value.map(d => d.count),
-    backgroundColor: [
-      colors.cyberPink,
-      colors.cyberBlue,
-      colors.neonGreen,
-      colors.electricYellow,
-      colors.cyberPurple,
-      '#ff0066'
-    ],
-    borderWidth: 2,
-    borderColor: '#000'
-  }]
-}))
+const statusChartData = computed(() => {
+  // Map status names to their corresponding colors
+  const statusColors = {
+    'paid': '#c0ffc0',        // Light Chrome Green
+    'pending': '#ffff80',     // Chrome Yellow
+    'processing': '#8080ff',  // Chrome Blue
+    'shipped': '#ffb380',     // Chrome Orange
+    'delivered': '#80ff80',   // Bright Chrome Green
+    'cancelled': '#ff8080',   // Chrome Red
+    'refunded': '#ff66cc'     // Chrome Pink
+  }
+
+  return {
+    labels: statusData.value.map(d => d.status),
+    datasets: [{
+      data: statusData.value.map(d => d.count),
+      backgroundColor: statusData.value.map(d => statusColors[d.status] || '#808080'),
+      borderWidth: 2,
+      borderColor: '#1a1a1a'
+    }]
+  }
+})
 
 const productsChartData = computed(() => ({
   labels: topProducts.value.map(p => p.name),
   datasets: [{
     label: 'Revenue ($)',
     data: topProducts.value.map(p => p.revenue),
-    backgroundColor: colors.neonGreen,
-    borderColor: colors.neonGreen,
-    borderWidth: 2
+    backgroundColor: colors.steel,
+    borderColor: colors.steel,
+    borderWidth: 1
   }]
 }))
 
@@ -284,9 +290,9 @@ const artistsChartData = computed(() => ({
   datasets: [{
     label: 'Revenue ($)',
     data: topArtists.value.map(a => a.revenue),
-    backgroundColor: colors.cyberPink,
-    borderColor: colors.cyberPink,
-    borderWidth: 2
+    backgroundColor: colors.concrete,
+    borderColor: colors.concrete,
+    borderWidth: 1
   }]
 }))
 
@@ -432,17 +438,25 @@ onMounted(() => {
 
 .filter-group label {
   font-weight: bold;
-  color: var(--color-cyber-blue);
+  color: var(--color-chrome);
   font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .filter-group .input {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-cyber-blue);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  font-family: 'Space Grotesk', sans-serif;
+  border: 1px solid var(--color-steel);
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--color-chrome);
+  font-family: 'Arial', sans-serif;
+}
+
+.filter-group .input:focus {
+  border-color: var(--color-chrome);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.2);
 }
 
 .stats-grid {
@@ -470,7 +484,7 @@ onMounted(() => {
 }
 
 .stat-sub {
-  color: var(--color-neon-green);
+  color: var(--color-concrete);
   font-size: 1.2rem;
   margin-top: var(--space-sm);
 }
@@ -490,8 +504,11 @@ onMounted(() => {
 
 .chart-container h3 {
   margin-bottom: var(--space-lg);
-  color: var(--color-cyber-blue);
+  color: var(--color-chrome);
   flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
 }
 
 .chart-wrapper {
@@ -515,7 +532,10 @@ onMounted(() => {
 
 .export-section h3 {
   margin-bottom: var(--space-lg);
-  color: var(--color-cyber-blue);
+  color: var(--color-chrome);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
 }
 
 .export-buttons {
@@ -530,7 +550,10 @@ onMounted(() => {
 
 .recent-orders h3 {
   margin-bottom: var(--space-lg);
-  color: var(--color-cyber-blue);
+  color: var(--color-chrome);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
 }
 
 .table-container {
@@ -549,10 +572,11 @@ th, td {
 }
 
 th {
-  color: var(--color-cyber-blue);
+  color: var(--color-chrome);
   font-weight: bold;
   font-size: 0.9rem;
   text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 tbody tr {
@@ -573,13 +597,46 @@ tbody tr:hover {
   display: inline-block;
 }
 
-.status-paid { background: var(--color-neon-green); color: black; }
-.status-pending { background: var(--color-electric-yellow); color: black; }
-.status-processing { background: var(--color-cyber-blue); color: black; }
-.status-shipped { background: var(--color-cyber-purple); color: white; }
-.status-delivered { background: var(--color-neon-green); color: black; }
-.status-cancelled { background: #ff0000; color: white; }
-.status-refunded { background: #ff6600; color: white; }
+.status-paid { background: var(--color-paid); color: black; }
+.status-pending { background: var(--color-pending); color: black; }
+.status-processing { background: var(--color-processing); color: white; }
+.status-shipped { background: var(--color-shipped); color: white; }
+.status-delivered { background: var(--color-delivered); color: black; }
+.status-cancelled { background: var(--color-cancelled); color: white; }
+.status-refunded { background: var(--color-refunded); color: white; }
+
+/* Brutalist Chrome Styling */
+.chrome-title {
+  font-size: var(--font-5xl);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  background: var(--gradient-metallic);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-2xl);
+  font-family: 'Arial Black', sans-serif;
+}
+
+.chrome-text {
+  color: var(--color-chrome);
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.chrome-card {
+  background: var(--bg-card);
+  border: 1px solid var(--color-iron);
+  box-shadow: var(--shadow-steel);
+  transition: all var(--transition-base);
+}
+
+.chrome-card:hover {
+  border-color: var(--color-chrome);
+  box-shadow: var(--shadow-metallic);
+  transform: translateY(-2px);
+}
 
 /* Responsive Design */
 @media (max-width: 1200px) {

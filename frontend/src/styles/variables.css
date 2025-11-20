@@ -1,38 +1,48 @@
-/* Y2K Theme Variables - Nostalgic colors and styling */
+/* AEVVM - Brutalist Dark Chrome Aesthetic */
 
 :root {
-  /* Y2K Color Palette */
-  --color-cyber-pink: #ff00ff;
-  --color-cyber-blue: #498481;
-  --color-cyber-blue-dark: #1f627a;
-  --color-cyber-purple: #9945ff;
-  --color-neon-green: #39ff14;
-  --color-electric-yellow: #ffff00;
-  --color-hot-pink: #ff69b4;
-  --color-lavender: #e0b0ff;
-  --color-lavender-dark: #8d75ad;
-  --color-matrix-green: #00ff41;
-  --color-silver-blue: #627a83;
-  --color-text: #00bfd0;
+  /* Brutalist Chrome Palette */
+  --color-chrome: #c0c0c0;
+  --color-chrome-light: #e8e8e8;
+  --color-chrome-dark: #808080;
+  --color-steel: #6a6a6a;
+  --color-iron: #4a4a4a;
+  --color-concrete: #95a5a6;
+  --color-charcoal: #2c2c2c;
+  --color-graphite: #3d3d3d;
+  --color-slate: #505050;
+  --color-industrial: #5a5a5a;
+  --color-accent: #a8a8a8;
+  --color-text: #d0d0d0;
+
+  /* For order status */
+
+  --color-paid: #c0ffc0;        /* Light Chrome Green */
+  --color-pending: #ffff80;     /* Chrome Yellow */
+  --color-processing: #8080ff;  /* Chrome Blue */
+  --color-shipped: #ffb380;     /* Chrome Orange */
+  --color-delivered: #80ff80;   /* Bright Chrome Green */
+  --color-cancelled: #ff8080;   /* Chrome Red */
+  --color-refunded: #ff66cc;    /* Chrome Pink */
   
   /* Grayscale */
   --color-white: #ffffff;
-  --color-black: #000000;
-  --color-silver: #c0c0c0;
-  --color-gray-light: #e0e0e0;
-  --color-gray-dark: #333333;
-  
+  --color-black: #0a0a0a;
+  --color-silver: #b8b8b8;
+  --color-gray-light: #909090;
+  --color-gray-dark: #1a1a1a;
+
   /* Gradients */
-  --gradient-cyber: linear-gradient(135deg, var(--color-cyber-pink), var(--color-cyber-blue), var(--color-cyber-purple));
-  --gradient-neon: linear-gradient(90deg, var(--color-neon-green), var(--color-cyber-blue), var(--color-cyber-pink));
-  --gradient-sunset: linear-gradient(135deg, var(--color-hot-pink), var(--color-electric-yellow), var(--color-cyber-purple));
-  --gradient-silver: linear-gradient(135deg, #f0f0f0a1, #c0c0c085, #90909095);
-  --gradient-holographic: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
-  
+  --gradient-chrome: linear-gradient(135deg, #c0c0c0, #808080, #a8a8a8);
+  --gradient-steel: linear-gradient(180deg, #6a6a6a, #3d3d3d);
+  --gradient-concrete: linear-gradient(90deg, #2c2c2c, #505050, #2c2c2c);
+  --gradient-silver: linear-gradient(135deg, #e8e8e8, #b8b8b8, #808080);
+  --gradient-metallic: linear-gradient(45deg, #c0c0c0, #ffffff, #c0c0c0, #808080);
+
   /* Background */
-  --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #424f4e 50%, #708483 100%);
-  --bg-card: rgba(255, 255, 255, 0.05);
-  --bg-card-hover: rgba(255, 255, 255, 0.1);
+  --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2c2c2c 100%);
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
   
   /* Typography */
   --font-primary: 'Roboto', sans-serif;
@@ -58,20 +68,20 @@
   --space-2xl: 3rem;
   --space-3xl: 4rem;
   
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-  --radius-xl: 2rem;
+  /* Border Radius - Brutalist (minimal rounding) */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 2px;
+  --radius-xl: 4px;
   --radius-full: 9999px;
-  
-  /* Shadows */
-  --shadow-glow-pink: 0 0 20px rgba(255, 0, 255, 0.5);
-  --shadow-glow-blue: 0 0 20px #498481;
-  --shadow-glow-green: 0 0 20px rgba(57, 255, 20, 0.5);
-  --shadow-glow-silver: 0 0 20px rgba(192, 192, 192, 0.5);
-  --shadow-neon: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  /* Shadows - Hard, industrial */
+  --shadow-chrome: 0 2px 8px rgba(192, 192, 192, 0.2);
+  --shadow-steel: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-hard: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  --shadow-metallic: 0 0 15px rgba(192, 192, 192, 0.3);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.6);
   
   /* Transitions */
   --transition-fast: 0.15s ease;
@@ -88,7 +98,8 @@
   --z-tooltip: 1070;
 }
 
-/* Dark mode variables (if needed) */
-[data-theme="dark"] {
-  --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0014 50%, #0d1117 100%);
+/* Brutalist theme enhancement */
+[data-theme="brutalist"] {
+  --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%);
+  --bg-card: rgba(192, 192, 192, 0.02);
 }

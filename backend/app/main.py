@@ -1,13 +1,13 @@
 """
-FastAPI application entry point for Y2K Shopping Website
+FastAPI application entry point for AEVVM Store
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 
 # Import routers
-from app.routes import products, artists, analytics, exports
-# from app.routes import auth, cart, orders  # Uncomment as you create them
+from app.routes import products, artists, analytics, exports, cart
+# from app.routes import auth, orders  # Uncomment as you create them
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -31,7 +31,7 @@ app.add_middleware(
 async def root():
     """Root endpoint - API health check"""
     return {
-        "message": "Welcome to Y2K Shopping API",
+        "message": "Welcome to AEVVM API",
         "status": "online",
         "docs": f"{settings.API_V1_STR}/docs"
     }
@@ -48,8 +48,8 @@ app.include_router(products.router, prefix=f"{settings.API_V1_STR}/products", ta
 app.include_router(artists.router, prefix=f"{settings.API_V1_STR}/artists", tags=["artists"])
 app.include_router(analytics.router, prefix=f"{settings.API_V1_STR}/analytics", tags=["analytics"])
 app.include_router(exports.router, prefix=f"{settings.API_V1_STR}/exports", tags=["exports"])
+app.include_router(cart.router, prefix=f"{settings.API_V1_STR}/cart", tags=["cart"])
 # app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
-# app.include_router(cart.router, prefix=f"{settings.API_V1_STR}/cart", tags=["cart"])
 # app.include_router(orders.router, prefix=f"{settings.API_V1_STR}/orders", tags=["orders"])
 
 

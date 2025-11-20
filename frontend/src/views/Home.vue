@@ -13,9 +13,43 @@ import poli_art from '../assets/poli_art.jpg';
       </div>
     </section>
 
-    <!-- Gallery Highlights Section -->
+    <!-- Products Section -->
+    <section class="products-section section-scroll">
+      <h2 class="section-title neon-text-blue text-center mb-5">Shop Collection</h2>
+      <div class="container">
+        <div v-if="loading" class="loading-state">
+          <div class="loader"></div>
+          <p>Loading products...</p>
+        </div>
+        <div v-else class="products-grid">
+          <div class="product-item hover-glow scale-in"
+               v-for="(product, index) in products.slice(0, 6)"
+               :key="product.id"
+               :style="`animation-delay: ${index * 0.1}s`">
+            <div class="product-img-container">
+              <img v-if="product.images && product.images.length > 0"
+                   :src="product.images[0].image_url"
+                   :alt="product.name"
+                   class="product-img"/>
+              <div v-else class="product-img-placeholder">
+                <span>{{ product.name.charAt(0) }}</span>
+              </div>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">{{ product.name }}</h3>
+              <p class="product-price">${{ product.base_price }}</p>
+              <button class="btn btn-primary hover-glow add-to-cart" @click="handleAddToCart(product)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- Gallery Highlights Section -->
     <section class="gallery-highlights section-scroll">
-      <h2 class="section-title neon-text-silver text-center mb-5">Artists</h2>
+      <h2 class="section-title neon-text-silver text-center mb-5">Featured Artists</h2>
       <div class="carousel-container">
           <div class="carousel-row">
             <!-- Artist card outside carousel -->
@@ -35,52 +69,15 @@ import poli_art from '../assets/poli_art.jpg';
       </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="products-section section-scroll">
-      <h2 class="section-title neon-text-blue text-center mb-5">Shop Collection</h2>
-      <div class="container">
-        <div class="products-grid">
-          <div class="product-item hover-glow scale-in" v-for="n in 6" :key="`product-${n}`" :style="`animation-delay: ${n * 0.1}s`">
-            <div class="product-img-container">
-              <img src="../assets/poli_art.jpg" alt="Product Name" class="product-img"/>
-            </div>
-            <div class="product-info">
-              <h3 class="product-name">Product {{ n }}</h3>
-              <p class="product-price">$29.99</p>
-              <button class="btn btn-primary hover-glow add-to-cart">Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Artist/Product Sections -->
-    <section class="artist-products section-scroll">
-      <div class="container">
-        <h2 class="section-title neon-text-blue text-center mb-5">Shop Artist Collections</h2>
-        <div class="artist-grid">
-          <!-- Placeholder for artist and product cards -->
-          <div class="artist-card hover-glow scale-in" v-for="n in 3" :key="`artist-${n}`" :style="`animation-delay: ${n * 0.2}s`">
-            <div class="artist-image blue-bg"> 
-              <img src="../assets/poli.jpg" alt="Artist Name" class="image-fit"/>
-            </div>
-            <h3 class="artist-name">Artist {{ n }}</h3>
-            <p class="product-title">T-Shirt Design {{ n }}</p>
-            <button class="btn btn-primary hover-glow">Buy Now</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- CTA Section -->
     <section class="cta section-scroll">
       <div class="container">
         <div class="cta-content glass p-5">
           <h2 class="cta-title mb-3">
-            Join the Y2K Revolution
+            Join the AEVVM movement
           </h2>
           <p class="cta-text mb-4">
-            Sign up now and get exclusive access to our retro-futuristic collection
+            Sign up now and get exclusive access to our artist collaborations and limited-edition drops.
           </p>
           <button class="btn btn-primary hover-glow pulse-scale">
             Get Started
@@ -92,6 +89,49 @@ import poli_art from '../assets/poli_art.jpg';
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import apiClient from '../api/client.js'
+import { useCart } from '../composables/useCart'
+
+const products = ref([])
+const loading = ref(true)
+const { addToCart } = useCart()
+
+// Fetch products from API
+const fetchProducts = async () => {
+  try {
+    loading.value = true
+    const response = await apiClient.get('/products/')
+    // API returns array directly, not wrapped in products property
+    products.value = Array.isArray(response.data) ? response.data : []
+  } catch (error) {
+    console.error('Error fetching products:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+// Add to cart handler
+const handleAddToCart = async (product) => {
+  // Get product with variants
+  try {
+    const productResponse = await apiClient.get(`/products/${product.id}`)
+    const productData = productResponse.data
+    const variants = productData.variants
+    if (variants && variants.length > 0) {
+      const success = await addToCart(variants[0].id, 1)
+      if (success) {
+        alert(`${product.name} added to cart!`)
+      }
+    } else {
+      alert('No variants available for this product')
+    }
+  } catch (error) {
+    console.error('Error adding to cart:', error)
+    alert('Failed to add to cart')
+  }
+}
+
 function scrollToNextSection() {
   const home = document.querySelector('.home');
   const sections = home.querySelectorAll('.section-scroll');
@@ -107,6 +147,10 @@ function scrollToNextSection() {
     }
   }
 }
+
+onMounted(() => {
+  fetchProducts()
+})
 </script>
 
 <style scoped>
@@ -565,6 +609,37 @@ function scrollToNextSection() {
 .add-to-cart {
   width: 100%;
   margin-top: var(--space-sm);
+}
+
+/* Loading State */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: var(--space-lg);
+}
+
+.loading-state p {
+  color: var(--color-chrome);
+  font-size: var(--font-lg);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Product Image Placeholder */
+.product-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-steel);
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--color-chrome);
+  text-transform: uppercase;
 }
 
 /* Responsive */

@@ -203,7 +203,7 @@ def get_top_artists(
                 "revenue": float(r.total_revenue),
                 "items_sold": r.total_items_sold,
                 "avg_commission_rate": float(r.avg_commission_rate or 0),
-                "estimated_commission": float(r.total_revenue * (r.avg_commission_rate or 0) / 100)
+                "estimated_commission": float(r.total_revenue) * float(r.avg_commission_rate or 0) / 100
             }
             for r in results
         ]
