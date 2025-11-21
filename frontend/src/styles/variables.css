@@ -41,8 +41,8 @@
 
   /* Background */
   --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2c2c2c 100%);
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --bg-card: rgb(24, 24, 24);
+  --bg-card-hover: rgba(255, 255, 255, 0);
   
   /* Typography */
   --font-primary: 'Roboto', sans-serif;

@@ -21,11 +21,13 @@ import poli_art from '../assets/poli_art.jpg';
           <div class="loader"></div>
           <p>Loading products...</p>
         </div>
-        <div v-else class="products-grid">
-          <div class="product-item hover-glow scale-in"
-               v-for="(product, index) in products.slice(0, 6)"
-               :key="product.id"
-               :style="`animation-delay: ${index * 0.1}s`">
+        <div v-else class="carousel-wrapper">
+          <div class="products-grid" ref="productsGrid">
+            <div class="product-item hover-glow"
+                 v-for="(product, index) in products.slice(0, 6)"
+                 :key="product.id"
+                 :ref="el => { if (el) productRefs[index] = el }"
+                 :class="{ 'in-view': visibleProducts[index] }">
             <div class="product-img-container">
               <img v-if="product.images && product.images.length > 0"
                    :src="product.images[0].image_url"
@@ -41,9 +43,20 @@ import poli_art from '../assets/poli_art.jpg';
               <button class="btn btn-primary hover-glow add-to-cart" @click="handleAddToCart(product)">
                 Add to Cart
               </button>
+              </div>
             </div>
           </div>
         </div>
+        <button class="carousel-scroll-arrow carousel-scroll-left"
+                @click="scrollCarouselPrev"
+                v-if="products.length > 0 && canScrollLeft">
+            <img src="@/assets/scroll_arrow.png" alt="Scroll Previous" />
+        </button>
+        <button class="carousel-scroll-arrow carousel-scroll-right"
+                @click="scrollCarouselNext"
+                v-if="products.length > 0 && canScrollRight">
+            <img src="@/assets/scroll_arrow.png" alt="Scroll Next" />
+        </button>
       </div>
     </section>
 
@@ -89,13 +102,23 @@ import poli_art from '../assets/poli_art.jpg';
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import apiClient from '../api/client.js'
 import { useCart } from '../composables/useCart'
 
 const products = ref([])
 const loading = ref(true)
 const { addToCart } = useCart()
+
+// Carousel animation refs
+const productsGrid = ref(null)
+const productRefs = ref([])
+const visibleProducts = ref(Array(6).fill(false))
+let observer = null
+
+// Carousel scroll arrow visibility
+const canScrollLeft = ref(false)
+const canScrollRight = ref(true)
 
 // Fetch products from API
 const fetchProducts = async () => {
@@ -148,8 +171,82 @@ function scrollToNextSection() {
   }
 }
 
+// Check scroll position to show/hide arrows
+const updateArrowVisibility = () => {
+  if (!productsGrid.value) return
+
+  const { scrollLeft, scrollWidth, clientWidth } = productsGrid.value
+
+  // Can scroll left if we're not at the start
+  canScrollLeft.value = scrollLeft > 10
+
+  // Can scroll right if we're not at the end
+  canScrollRight.value = scrollLeft < scrollWidth - clientWidth - 10
+}
+
+// Scroll carousel to next item
+const scrollCarouselNext = () => {
+  if (productsGrid.value) {
+    const scrollAmount = 320 + 32; // card width + gap
+    productsGrid.value.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth'
+    });
+  }
+}
+
+// Scroll carousel to previous item
+const scrollCarouselPrev = () => {
+  if (productsGrid.value) {
+    const scrollAmount = 320 + 32; // card width + gap
+    productsGrid.value.scrollBy({
+      left: -scrollAmount,
+      behavior: 'smooth'
+    });
+  }
+}
+
 onMounted(() => {
   fetchProducts()
+
+  // Setup intersection observer for carousel animations
+  setTimeout(() => {
+    if (productsGrid.value) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const index = productRefs.value.indexOf(entry.target)
+            if (index !== -1) {
+              visibleProducts.value[index] = entry.isIntersecting
+            }
+          })
+        },
+        {
+          root: productsGrid.value,
+          threshold: 0.6,
+          rootMargin: '0px'
+        }
+      )
+
+      productRefs.value.forEach((el) => {
+        if (el) observer.observe(el)
+      })
+
+      // Add scroll event listener to update arrow visibility
+      productsGrid.value.addEventListener('scroll', updateArrowVisibility)
+      // Initial check
+      updateArrowVisibility()
+    }
+  }, 100)
+})
+
+onUnmounted(() => {
+  if (observer) {
+    observer.disconnect()
+  }
+  if (productsGrid.value) {
+    productsGrid.value.removeEventListener('scroll', updateArrowVisibility)
+  }
 })
 </script>
 
@@ -543,17 +640,99 @@ onMounted(() => {
 /* Products Section */
 .products-section {
   padding: var(--space-2xl) 0;
+  position: relative;
+}
+
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  height: 70vh;
 }
 
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   gap: var(--space-xl);
   height: 70vh;
-  max-width: 1200px;
   max-height: 70vh;
-  margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-2xl);
+  align-items: center;
+  position: relative;
+}
+
+/* Carousel scroll arrows */
+.carousel-scroll-arrow {
+  position: absolute;
+  top: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: all var(--transition-base);
+  padding: 0;
+}
+
+.carousel-scroll-right {
+  right: 5vw;
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.carousel-scroll-right:hover {
+  transform: translateY(-50%) rotate(-90deg) scale(1.15);
+  filter: drop-shadow(0 0 12px rgba(192, 192, 192, 0.6));
+}
+
+.carousel-scroll-left {
+  left: 5vw;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.carousel-scroll-left:hover {
+  transform: translateY(-50%) rotate(90deg) scale(1.15);
+  filter: drop-shadow(0 0 12px rgba(192, 192, 192, 0.6));
+}
+
+.carousel-scroll-arrow img {
+  width: 96px;
+  height: 96px;
+  opacity: 0.6;
+  transition: opacity var(--transition-base);
+}
+
+.carousel-scroll-arrow:hover img {
+  opacity: 0.9;
+}
+
+/* Edge fade indicators for scroll hint */
+.products-section::before,
+.products-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.8;
+}
+
+.products-section::before {
+  left: 0;
+  background: linear-gradient(to right,
+    rgba(5, 5, 16, 0.95) 0%,
+    rgba(5, 5, 16, 0.7) 40%,
+    transparent 100%
+  );
+}
+
+.products-section::after {
+  right: 0;
+  background: linear-gradient(to left,
+    rgba(5, 5, 16, 0.95) 0%,
+    rgba(5, 5, 16, 0.7) 40%,
+    transparent 100%
+  );
 }
 
 .product-item {
@@ -564,17 +743,39 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 320px;
+  max-width: 320px;
+  height: 60vh;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+
+  /* Brutalist carousel animation - default state (out of view) */
+  opacity: 0.4;
+  transform: scale(0.88);
+  filter: grayscale(0.6) brightness(0.7);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* In-view state - sharp, mechanical transition */
+.product-item.in-view {
+  opacity: 1;
+  transform: scale(1);
+  filter: grayscale(0) brightness(1);
+  border-color: var(--color-silver);
 }
 
 .product-item:hover {
-  transform: translateY(-5px);
+  transform: scale(1) translateY(-5px);
   box-shadow: 0 8px 32px rgba(0, 250, 255, 0.3);
+}
+
+.product-item.in-view:hover {
+  border-color: var(--color-cyber-blue);
 }
 
 .product-img-container {
   width: 100%;
-  height: 200px;
+  height: 68%;
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--color-cyber-blue);
@@ -642,49 +843,70 @@ onMounted(() => {
   text-transform: uppercase;
 }
 
+/* Scrollbar styling for carousel */
+.products-grid::-webkit-scrollbar {
+  height: 12px;
+}
+
+.products-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.products-grid::-webkit-scrollbar-thumb {
+  background: var(--color-cyber-blue);
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.products-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--color-silver);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .btn {
     width: 100%;
     max-width: 300px;
   }
-  
+
   .shape {
     filter: blur(40px);
   }
 
-  /* Products become carousel on mobile */
+  /* Smaller cards on mobile */
   .products-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    padding: 0 var(--space-lg);
     gap: var(--space-lg);
-    padding: 0 var(--space-md);
   }
 
   .product-item {
-    min-width: 280px;
-    flex-shrink: 0;
-    scroll-snap-align: start;
+    min-width: 260px;
+    max-width: 260px;
+    height: 55vh;
   }
 
-  .products-grid::-webkit-scrollbar {
-    height: 8px;
+  .products-section::before,
+  .products-section::after {
+    width: 80px;
   }
 
-  .products-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+  .carousel-scroll-right {
+    right: 10vw;
   }
 
-  .products-grid::-webkit-scrollbar-thumb {
-    background: var(--color-cyber-blue);
-    border-radius: 10px;
+  .carousel-scroll-left {
+    left: 10vw;
+  }
+
+  .carousel-scroll-arrow img {
+    width: 64px;
+    height: 64px;
   }
 }
 </style>
